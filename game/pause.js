@@ -96,7 +96,7 @@ window.ArmyPause = (function () {
         <div class="pause-btns">
           <button class="btn go" type="button" data-act="play"></button>
           <button class="btn warn" type="button" data-act="again"></button>
-          <a class="btn home" href="../kids-games/index.html"></a>
+          <a class="btn home" href="../index.html"></a>
         </div>
       </div>`;
     document.body.appendChild(box);

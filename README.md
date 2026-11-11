@@ -4,7 +4,7 @@ Build your own city from the Stone Age to the AI Empire: it makes the army that 
 
 The page is `index.html`. The game's own code is in `game/`. A few files are shared with kids-games and were copied from it: `css/style.css`, `js/i18n.js` (languages), `js/sound.js` (sounds and music), `js/config.js`, `js/accounts.js` and `js/badges.js` (player accounts, best scores and badges, in the same Supabase project as kids-games), `js/version.js` and `js/lib/three.min.js`. Wins are still sent as `army` with a `-city` level, so they keep showing in the kids-games Best scores page, and the same browser storage keys are used, so a player signed in on kids-games is signed in here too when both are served from the same site. If you change one of those shared files in kids-games, copy it here too.
 
-The 🏠 button goes to `../kids-games/index.html`, the kids-games hub next to this game on public-pages.
+The 🏠 button goes to `../index.html`, the landing page of all of Julien's projects on public-pages.
 
 
 ## One battle, three views: 2D / 3D / FPS
@@ -58,7 +58,7 @@ python3 -m http.server 8000
 
 ## Version
 
-The version is kept in one place: `APP_VERSION` in `js/version.js` (now **1.0.0**).
+The version is kept in one place: `APP_VERSION` in `js/version.js` (now **1.0.1**).
 
 ## Build and publish
 
