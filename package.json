@@ -1,0 +1,16 @@
+{
+  "name": "army-rush-city",
+  "private": true,
+  "description": "Army Rush City: build your city from the Stone Age to the AI Empire, and it makes the army that stops the enemy. The version is in js/version.js.",
+  "scripts": {
+    "ci": "node build.mjs",
+    "build": "node build.mjs",
+    "build-standalone": "node build.mjs",
+    "publish-dist": "node scripts/publish-dist.mjs"
+  },
+  "devDependencies": {
+    "clean-css": "^5.3.3",
+    "html-minifier-terser": "^7.2.0",
+    "terser": "^5.51.2"
+  }
+}

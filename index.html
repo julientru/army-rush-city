@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Army Rush City</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="game/city.css">
+  <link rel="stylesheet" href="game/explore.css">
+  <link rel="stylesheet" href="game/pause.css">
+  <link rel="stylesheet" href="game/tutorial.css">
+  <link rel="stylesheet" href="game/army.css">
+</head>
+<body data-no-footer data-city>
+  <div id="stage" data-view="2d">
+    <div class="layer" id="hurt"></div>
+    <div id="banner" hidden></div>
+    <div id="cross" hidden>
+      <svg viewBox="-28 -28 56 56" aria-hidden="true">
+        <g fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round">
+          <circle r="15"></circle>
+          <path d="M0 -26V-9M0 26V9M-26 0H-9M26 0H9"></path>
+          <path class="x" d="M-12 -12L-5 -5M12 -12L5 -5M-12 12L-5 5M12 12L5 5" stroke="#ffd93d"></path>
+        </g>
+        <circle r="2.5" fill="currentColor"></circle>
+      </svg>
+    </div>
+    <div class="gauges">
+      <div class="gauge" id="lifeGauge"><span>❤️</span><div class="bar"><i id="lifeFill" style="width: 100%"></i></div></div>
+      <div class="gauge" id="wallGauge"><span>🧱</span><div class="bar"><i id="wallFill" style="width: 100%"></i></div></div>
+    </div>
+    <div class="layer" id="screen"></div>
+    <div class="levels" id="menu" role="group" aria-label="Choose how hard">
+      <button class="btn" data-level="easy" aria-pressed="true">Easy</button>
+      <button class="btn" data-level="normal" aria-pressed="false">Normal</button>
+      <button class="btn" data-level="hard" aria-pressed="false">Hard</button>
+      <button class="btn" data-level="mega" aria-pressed="false">Mega-hard</button>
+    </div>
+    <button class="btn turn" id="left" aria-label="Move left">⬅️</button>
+    <button class="btn turn" id="right" aria-label="Move right">➡️</button>
+    <div class="hud">
+      <a class="btn home" href="../kids-games/index.html" aria-label="Back to games">🏠</a>
+      <span>🌊 <b id="wave">1</b>/12</span>
+      <span>❤️ <b id="life">100</b></span>
+      <span id="weapon">🪨 Stones</span>
+    </div>
+    <div class="views" role="group" aria-label="Choose the view">
+      <button class="btn" type="button" data-view="2d" aria-pressed="true">2D</button>
+      <button class="btn" type="button" data-view="3d" aria-pressed="false">3D</button>
+      <button class="btn" type="button" data-view="fps" aria-pressed="false">FPS</button>
+    </div>
+  </div>
+
+  <script src="js/i18n.js"></script>
+  <script src="js/sound.js"></script>
+  <script src="game/epic-music.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/accounts.js"></script>
+  <script src="js/badges.js"></script>
+  <script src="js/lib/three.min.js"></script>
+  <script src="game/strings.js"></script>
+  <script src="game/city-strings.js"></script>
+  <script src="game/tutorial-strings.js"></script>
+  <script src="game/tutorial.js"></script>
+  <script src="game/city.js"></script>
+  <script src="game/pause-strings.js"></script>
+  <script src="game/pause.js"></script>
+  <script src="game/city3d.js"></script>
+  <script src="game/explore.js"></script>
+  <script src="game/units3d.js"></script>
+  <script src="game/sprites2d.js"></script>
+  <script src="game/view2d.js"></script>
+  <script src="game/view3d.js"></script>
+  <script src="game/viewfps.js"></script>
+  <script src="game/army.js"></script>
+  <script src="js/version.js"></script>
+</body>
+</html>

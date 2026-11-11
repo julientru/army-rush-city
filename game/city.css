@@ -1,0 +1,114 @@
+/* Army Rush City: the 🏘️ button and the city view. */
+.btn.city-open { position: relative; min-width: 48px; min-height: 48px; padding: 4px 10px; font-size: 1.5rem; background: var(--green); }
+.btn.city-open[hidden] { display: none; }
+.city-dot {
+  position: absolute; top: -6px; right: -6px; min-width: 22px; height: 22px; padding: 0 5px;
+  border-radius: 11px; background: var(--yellow); color: var(--ink);
+  font-size: 0.85rem; line-height: 22px; text-align: center;
+}
+.city-dot.bad { background: var(--accent); color: #fff; animation: city-blink 0.6s infinite alternate; }
+.city-dot[hidden] { display: none; }
+
+.city {
+  position: fixed; inset: 0; z-index: 50;
+  overflow-y: auto; -webkit-overflow-scrolling: touch;
+  background: var(--bg); color: var(--ink);
+  padding: max(8px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom));
+  cursor: auto; touch-action: auto;
+}
+.city[hidden] { display: none; }
+html.city-on, html.city-on body { overflow: hidden; }
+.city-in { max-width: 560px; margin: 0 auto; display: flex; flex-direction: column; gap: 8px; }
+.city-top { display: flex; align-items: center; gap: 6px 8px; flex-wrap: wrap; }
+.city-top h2 { margin: 0; flex: 1 1 auto; font-size: clamp(1.1rem, 5vw, 1.7rem); white-space: nowrap; }
+.city-top .btn { min-height: 44px; padding: 6px 12px; font-size: clamp(0.9rem, 3.8vw, 1.1rem); background: var(--accent); white-space: nowrap; }
+.city-era {
+  background: var(--card); box-shadow: var(--shadow); border-radius: 12px; padding: 4px 10px;
+  font-weight: bold; font-size: clamp(0.8rem, 3.4vw, 1rem); text-align: center; white-space: nowrap; margin-left: auto;
+}
+
+.city-alert {
+  font: inherit; font-weight: bold; font-size: clamp(0.9rem, 3.8vw, 1.1rem);
+  border: none; border-radius: 14px; padding: 8px 12px; min-height: 44px;
+  background: #e3f2fd; color: var(--ink); box-shadow: var(--shadow); cursor: pointer; text-align: center;
+  max-width: 100%; white-space: normal; overflow-wrap: anywhere; line-height: 1.25;
+}
+.city-alert[hidden] { display: none; }
+.city-alert.bad { background: var(--accent); color: #fff; }
+.city-alert.blink { animation: city-blink 0.5s infinite alternate; }
+.city-alert.go { background: var(--green); color: #fff; }
+.city-alert.warn { background: var(--yellow); }
+.city-alert.calm { background: #dff5e1; cursor: default; }
+@keyframes city-blink { from { filter: brightness(1); } to { filter: brightness(1.3); transform: scale(1.02); } }
+
+.city-res { display: flex; gap: 4px; justify-content: space-between; }
+.city-chip {
+  flex: 1 1 0; min-width: 0; display: flex; align-items: center; justify-content: center; gap: 2px;
+  background: var(--card); box-shadow: var(--shadow); border-radius: 10px; padding: 4px 2px;
+  font-size: clamp(0.75rem, 3.4vw, 1rem); white-space: nowrap;
+}
+.city-chip.bad { background: #ffd6d6; }
+.city-chip:first-child { flex-grow: 1.5; }
+
+.city-map { width: 100%; height: auto; aspect-ratio: 480 / 360; touch-action: auto; }
+
+.city-next { display: flex; flex-direction: column; gap: 3px; font-weight: bold; font-size: clamp(0.85rem, 3.6vw, 1rem); text-align: center; }
+.city-bar { height: 12px; border-radius: 7px; background: #2b2d42; padding: 2px; min-width: 70px; }
+.city-bar[hidden] { display: none; }
+.city-bar i { display: block; height: 100%; width: 0; border-radius: 5px; background: var(--yellow); transition: width 0.25s; }
+
+.city-tabs { display: flex; gap: 6px; }
+.city-tabs .btn { flex: 1 1 0; min-width: 0; min-height: 48px; padding: 6px 4px; font-size: clamp(0.85rem, 3.6vw, 1.15rem); background: #b9b9c8; overflow-wrap: anywhere; }
+.city-tabs .btn[aria-selected="true"] { background: var(--blue); }
+
+.city-panel { display: flex; flex-direction: column; gap: 6px; }
+.city-idle {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap;
+  font-weight: bold; padding: 6px 10px; border-radius: 14px; background: #dff5e1;
+}
+.city-idle.on { background: #fff4c2; animation: city-blink 0.8s infinite alternate; }
+.city-idle .btn { min-height: 44px; padding: 6px 10px; font-size: 1rem; }
+.city-idle .btn[hidden] { display: none; }
+.city-row {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--card); box-shadow: var(--shadow); border-radius: 14px; padding: 6px 8px;
+}
+.city-row.locked { opacity: 0.55; }
+.city-ic { font-size: 2rem; width: 2.4rem; text-align: center; flex: none; }
+.city-txt { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.city-txt b { font-size: clamp(0.95rem, 4vw, 1.15rem); }
+.city-txt small { font-size: clamp(0.75rem, 3.2vw, 0.9rem); opacity: 0.8; }
+.city-act { display: flex; align-items: center; gap: 6px; flex: none; }
+.city-act .btn { min-width: 48px; min-height: 48px; padding: 4px 10px; font-size: 1.5rem; }
+.city-act .btn.small { background: #b9b9c8; }
+.city-act .btn.go { background: var(--green); }
+.city-act .btn.buy { font-size: clamp(0.8rem, 3.4vw, 1rem); background: var(--green); white-space: nowrap; }
+.city-act .btn:disabled { background: #d6d6de; color: #8d8d99; box-shadow: none; cursor: default; transform: none; }
+.city-count { min-width: 2ch; text-align: center; font-size: 1.4rem; }
+
+/* On a screen on its side, the map takes the whole height on the left and the rest sits beside it. */
+@media (orientation: landscape) and (min-width: 600px) {
+  .city { padding-left: max(12px, env(safe-area-inset-left)); padding-right: max(12px, env(safe-area-inset-right)); }
+  .city-in {
+    --map-w: min(58vw, calc((100vh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom)) * 4 / 3));
+    max-width: none; display: grid; align-items: start;
+    grid-template-columns: var(--map-w) minmax(0, 620px); justify-content: center;
+    grid-template-rows: auto auto auto auto auto 1fr; column-gap: 12px; row-gap: 8px;
+  }
+  .city-in > * { grid-column: 2; }
+  .city-in > .city-map { grid-column: 1; grid-row: 1 / -1; position: sticky; top: 0; }
+  /* The right column is narrow on a phone on its side: smaller words so nothing spills out. */
+  .city-top h2 { font-size: clamp(1rem, 2.6vw, 1.7rem); }
+  .city-top .btn, .city-alert, .city-tabs .btn { font-size: clamp(0.8rem, 2vw, 1.1rem); }
+  .city-era, .city-next { font-size: clamp(0.75rem, 1.8vw, 1rem); }
+  .city-chip { font-size: clamp(0.7rem, 1.7vw, 1rem); }
+}
+
+/* Gold: a round coin with a $ on it. */
+.city-coin {
+  display: inline-block; width: 1.15em; height: 1.15em; border-radius: 50%; vertical-align: -0.2em;
+  background: radial-gradient(circle at 35% 30%, #fff3b0, #ffd93d 45%, #e9a400);
+  box-shadow: inset 0 0 0 0.09em #b77900; color: #8a5a00;
+  font: bold 0.8em/1.15em sans-serif; text-align: center;
+}
+.city-act .btn .city-coin { font-size: 0.85em; }

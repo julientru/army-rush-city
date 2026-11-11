@@ -1,0 +1,134 @@
+/* Army Rush and Army Rush City: the battle screen, in every view. */
+html, body { height: 100%; overflow: hidden; }
+body { padding: 0; background: #bde0fe; }
+/* The whole screen is the field, upright or on its side, in every view. */
+#stage {
+  position: fixed; inset: 0;
+  overflow: hidden;
+  background: #bde0fe;
+  touch-action: none;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
+#stage[data-view="2d"] { background: #74c69d; }
+#stage[data-view="fps"] { cursor: none; }
+#stage canvas.view { position: absolute; inset: 0; display: block; width: 100%; height: 100%; border-radius: 0; box-shadow: none; background: none; }
+#stage canvas.view[hidden] { display: none; }
+#stage .layer { position: absolute; inset: 0; pointer-events: none; }
+#hurt { background: #ff6b6b; opacity: 0; }
+.hud {
+  position: absolute; top: max(6px, env(safe-area-inset-top)); left: max(6px, env(safe-area-inset-left)); right: max(6px, env(safe-area-inset-right));
+  display: flex; align-items: center; gap: 6px; pointer-events: none;
+  font-size: clamp(0.85rem, 3.6vw, 1.1rem);
+}
+.hud .btn.home { pointer-events: auto; min-width: 44px; min-height: 44px; padding: 4px 8px; font-size: 1.2rem; cursor: pointer; }
+.hud .btn.city-open { pointer-events: auto; min-width: 44px; min-height: 44px; padding: 4px 8px; font-size: 1.2rem; }
+.hud .city-open span { background: none; padding: 0; }
+.hud span { background: rgba(255, 255, 255, 0.85); padding: 4px 8px; border-radius: 12px; font-weight: bold; white-space: nowrap; }
+.hud #weapon { margin-left: auto; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+/* 2D / 3D / FPS: under the top bar on the right, always there, even in the middle of a battle. */
+.views {
+  position: absolute; right: max(6px, env(safe-area-inset-right)); top: calc(max(6px, env(safe-area-inset-top)) + 50px);
+  display: flex; gap: 3px; padding: 3px; border-radius: 14px; background: rgba(43, 45, 66, 0.35);
+}
+.views .btn {
+  min-width: 44px; min-height: 36px; padding: 2px 8px; margin: 0; font-size: 0.95rem; font-weight: bold;
+  background: rgba(255, 255, 255, 0.85); color: #2b2d42; box-shadow: none; cursor: pointer;
+}
+.views .btn[aria-pressed="true"] { background: var(--green); color: #fff; }
+.views .btn:disabled { opacity: 0.4; cursor: default; }
+/* On a narrow phone the top bar is full of buttons: the weapon goes on the second row, left of the views. */
+@media (max-width: 440px) {
+  .hud #weapon { position: absolute; left: 0; top: 54px; max-width: calc(100% - 170px); margin: 0; }
+}
+#banner {
+  position: absolute; left: 6%; right: 6%; top: max(15%, calc(max(6px, env(safe-area-inset-top)) + 100px));
+  padding: 10px 12px; border-radius: 16px;
+  background: rgba(43, 45, 66, 0.7); color: #fff;
+  font-weight: bold; font-size: clamp(1rem, 5vw, 1.6rem); text-align: center;
+  pointer-events: none;
+}
+#stage[data-view="2d"] #banner { top: 36%; }
+/* FPS: the cross-hair turns red over an enemy or a box, and flashes an X on a hit. */
+#cross {
+  position: absolute; width: 56px; height: 56px; margin: -28px 0 0 -28px;
+  pointer-events: none; color: #fff; filter: drop-shadow(0 0 2px #2b2d42) drop-shadow(0 0 1px #2b2d42);
+  transition: transform 0.08s;
+}
+#cross[hidden] { display: none; }
+#cross svg { width: 100%; height: 100%; overflow: visible; }
+#cross .x { opacity: 0; }
+#cross.on { color: #ff6b6b; transform: scale(0.85); }
+#cross.hit .x { opacity: 1; }
+/* Life (3D and FPS) and wall (FPS) gauges. The 2D view draws its own on the field. */
+.gauges {
+  position: absolute; left: 50%; transform: translateX(-50%);
+  bottom: max(8px, env(safe-area-inset-bottom)); width: min(56%, 360px);
+  display: flex; flex-direction: column; gap: 4px; pointer-events: none; font-size: 0.9rem;
+}
+#stage[data-view="2d"] .gauges, #stage:not([data-view="fps"]) #wallGauge { display: none; }
+.gauge { display: flex; align-items: center; gap: 6px; }
+.gauge .bar { flex: 1; height: 12px; border-radius: 7px; background: #2b2d42; padding: 2px; }
+.gauge i { display: block; height: 100%; border-radius: 5px; background: #6bcb77; transition: width 0.2s; }
+#wallFill { background: #e09f3e; }
+#wallGauge.gone { opacity: 0.4; }
+.turn {
+  position: absolute; bottom: max(10px, env(safe-area-inset-bottom));
+  min-width: 64px; min-height: 64px; font-size: 1.8rem; padding: 0;
+  background: rgba(77, 150, 255, 0.75); cursor: pointer;
+}
+#left { left: max(10px, env(safe-area-inset-left)); }
+#right { right: max(10px, env(safe-area-inset-right)); }
+#screen {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+  background: rgba(43, 45, 66, 0.45); color: #fff; text-align: center; padding: 64px 12px 120px;
+  font-weight: bold; font-size: clamp(0.95rem, 4.4vw, 1.4rem);
+  text-shadow: -2px -2px 0 #2b2d42, 2px -2px 0 #2b2d42, -2px 2px 0 #2b2d42, 2px 2px 0 #2b2d42, 0 3px 0 #2b2d42;
+}
+#screen[hidden] { display: none; }
+#screen .big { font-size: 1.7em; color: #ffd93d; }
+#screen .go { font-size: 1.3em; color: #6bcb77; margin-top: 8px; }
+#screen .bad { color: #ff6b6b; }
+#screen .gold { color: #ffd93d; }
+#menu {
+  position: absolute; left: 84px; right: 84px; bottom: max(12px, env(safe-area-inset-bottom));
+  justify-content: center;
+  flex-wrap: wrap; gap: 6px; margin: 0;
+}
+#menu[hidden], .gauges[hidden] { display: none; }
+@media (max-width: 520px) { #menu { left: 8px; right: 8px; bottom: 96px; flex-wrap: nowrap; } }
+#menu .btn { min-height: 44px; padding: 6px 10px; font-size: clamp(0.85rem, 3.6vw, 1.1rem); cursor: pointer; }
+@media (orientation: landscape) and (max-height: 500px) {
+  #screen { padding-top: 48px; padding-bottom: 64px; font-size: clamp(0.8rem, 3.4vh, 1.2rem); gap: 0; }
+}
+
+/* Army Rush City: a darker, more serious look than the bright Army Rush. */
+body, #stage { background: #9aa5ad; }
+#stage[data-view="2d"] { background: #5b6146; }
+#stage .btn {
+  background: rgba(30, 32, 34, 0.78); color: #ece8df;
+  border: 1px solid rgba(255, 255, 255, 0.16); border-radius: 10px;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.45);
+}
+#stage .btn[aria-pressed="true"], .views .btn[aria-pressed="true"] { background: #556b2f; color: #fff; border-color: #8a9a5b; }
+#stage .turn { background: rgba(30, 32, 34, 0.6); }
+.views { background: rgba(20, 22, 24, 0.45); border-radius: 12px; }
+.hud span { background: rgba(30, 32, 34, 0.78); color: #ece8df; border-radius: 8px; }
+#banner {
+  border-radius: 4px; border-left: 5px solid #a3191b;
+  background: rgba(18, 19, 20, 0.78); color: #f1e9d8;
+  font-family: "Arial Black", "Helvetica Neue", Arial, sans-serif; letter-spacing: 0.04em; text-transform: uppercase;
+}
+#screen {
+  background: rgba(18, 19, 20, 0.62);
+  font-family: "Arial Black", "Helvetica Neue", Arial, sans-serif;
+  text-shadow: 0 2px 4px #000;
+}
+#screen .big { color: #e9c46a; letter-spacing: 0.03em; }
+#screen .go { color: #a7c957; }
+#screen .bad { color: #e5554f; }
+#screen .gold { color: #e9c46a; }
+#hurt { background: #8b0000; }
+.gauge .bar { border-radius: 3px; background: #151617; }
+.gauge i { border-radius: 2px; background: #6a8f3a; }

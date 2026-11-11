@@ -1,0 +1,41 @@
+/* The tutorial cards shared by the Army Rush games (tutorial.js), and its ❓ button. */
+.tuto {
+  position: fixed; inset: 0; z-index: 70;
+  display: flex; align-items: center; justify-content: center;
+  padding: max(12px, env(safe-area-inset-top)) 16px max(12px, env(safe-area-inset-bottom));
+  background: rgba(43, 45, 66, 0.55); cursor: auto; touch-action: manipulation;
+}
+.tuto[hidden] { display: none; }
+.tuto-card {
+  width: 100%; max-width: 420px; max-height: 100%; overflow-y: auto;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  padding: 18px 16px 16px; border-radius: var(--radius);
+  background: var(--card); color: var(--ink); box-shadow: var(--shadow); text-align: center;
+  animation: tuto-in 0.25s ease-out;
+}
+@keyframes tuto-in { from { transform: scale(0.85); opacity: 0; } }
+.tuto-pic { font-size: clamp(3.2rem, 16vw, 4.6rem); line-height: 1.1; }
+.tuto-pic.slide { animation: tuto-slide 1.6s ease-in-out infinite alternate; }
+.tuto-pic.aim { animation: tuto-aim 2.4s ease-in-out infinite; }
+.tuto-pic.pop { animation: tuto-pop 0.9s ease-in-out infinite alternate; }
+@keyframes tuto-slide { from { transform: translateX(-28%); } to { transform: translateX(28%); } }
+@keyframes tuto-aim {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(-30%, -12%); }
+  50% { transform: translate(24%, 8%); }
+  75% { transform: translate(10%, -16%); }
+}
+@keyframes tuto-pop { to { transform: scale(1.15) rotate(-6deg); } }
+.tuto-text { margin: 0; font-weight: bold; font-size: clamp(1.05rem, 4.6vw, 1.3rem); line-height: 1.35; }
+.tuto-dots { display: flex; gap: 6px; }
+.tuto-dots[hidden] { display: none; }
+.tuto-dots i { width: 10px; height: 10px; border-radius: 50%; background: #d6d6e0; }
+.tuto-dots i.on { background: var(--blue); }
+.tuto-btns { display: flex; gap: 8px; width: 100%; justify-content: center; }
+.tuto-btns .btn { min-height: 48px; padding: 6px 14px; font-size: clamp(1rem, 4.2vw, 1.2rem); cursor: pointer; }
+.tuto-btns .btn[hidden] { display: none; }
+.tuto-skip { background: #b9b9c8; margin-right: auto; }
+.tuto-back { background: var(--yellow); color: var(--ink); }
+.tuto-next { background: var(--green); }
+.hud .btn.tuto-help { pointer-events: auto; min-width: 44px; min-height: 44px; padding: 4px 8px; font-size: 1.2rem; cursor: pointer; background: var(--yellow); }
+@media (prefers-reduced-motion: reduce) { .tuto-card, .tuto-pic { animation: none !important; } }

@@ -1,0 +1,54 @@
+/* Explore my city (explore.js): in the 3D and FPS views, the 3D city full screen, with the controls on top. */
+/* The city map: the 2D one or the 3D one shows (see setupMap in city.js), and only the 3D one can be explored. */
+.city .city-map[hidden] { display: none; }
+.city.flat .explore-go { display: none; }
+.btn.explore-go { min-height: 48px; font-size: clamp(0.95rem, 4vw, 1.2rem); background: var(--blue); cursor: pointer; }
+.city.exploring { overflow: hidden; }
+.city.exploring .city-map {
+  position: fixed; inset: 0; z-index: 60; width: 100%; height: 100%; aspect-ratio: auto;
+  border-radius: 0; box-shadow: none;
+}
+.city.exploring .city-alert { position: fixed; z-index: 62; left: 50%; transform: translateX(-50%); top: calc(max(8px, env(safe-area-inset-top)) + 58px); width: max-content; max-width: 92%; min-height: 0; padding: 6px 12px; font-size: clamp(0.8rem, 3.4vw, 1rem); }
+.city.exploring .city-alert.calm { display: none; }
+.explore { position: fixed; inset: 0; z-index: 61; touch-action: none; user-select: none; -webkit-user-select: none; cursor: grab; }
+.explore:active { cursor: grabbing; }
+.explore[hidden] { display: none; }
+.explore .btn { cursor: pointer; }
+.explore-top {
+  position: absolute; top: max(8px, env(safe-area-inset-top)); left: max(8px, env(safe-area-inset-left)); right: max(8px, env(safe-area-inset-right));
+  display: flex; gap: 8px; align-items: center; justify-content: space-between;
+}
+.explore-top .btn { min-height: 46px; padding: 6px 12px; font-size: clamp(0.9rem, 3.8vw, 1.1rem); white-space: nowrap; }
+.explore-back { background: var(--accent); }
+.explore-modes { display: flex; gap: 4px; padding: 4px; border-radius: 16px; background: rgba(43, 45, 66, 0.35); }
+.explore-modes .btn { background: #b9b9c8; box-shadow: none; }
+.explore-modes .btn[aria-pressed="true"] { background: var(--green); }
+.explore-hint {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: max-content; max-width: 80%;
+  padding: 10px 14px; border-radius: 16px; background: rgba(43, 45, 66, 0.7); color: #fff;
+  font-weight: bold; font-size: clamp(0.95rem, 4vw, 1.3rem); text-align: center; pointer-events: none;
+  transition: opacity 0.6s;
+}
+.explore-hint.gone { opacity: 0; }
+.explore-stick {
+  position: absolute; left: max(24px, env(safe-area-inset-left)); bottom: max(24px, env(safe-area-inset-bottom));
+  width: 120px; height: 120px; border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3); border: 3px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 0 2px rgba(43, 45, 66, 0.4); opacity: 0.75;
+}
+.explore-stick.on { opacity: 1; }
+.explore-stick i {
+  position: absolute; left: 50%; top: 50%; width: 54px; height: 54px; margin: -27px 0 0 -27px; border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95); box-shadow: 0 2px 0 rgba(43, 45, 66, 0.5); pointer-events: none;
+}
+.explore-side {
+  position: absolute; right: max(14px, env(safe-area-inset-right)); bottom: max(20px, env(safe-area-inset-bottom));
+  display: grid; grid-template-columns: auto auto; gap: 8px;
+}
+.explore-side .btn { min-width: 56px; min-height: 56px; padding: 0; font-size: 1.5rem; background: rgba(77, 150, 255, 0.85); touch-action: none; }
+.explore-side .explore-zoom { background: rgba(255, 255, 255, 0.85); }
+.explore.walking .explore-up { display: none; }
+@media (orientation: landscape) and (max-height: 500px) {
+  .explore-stick { width: 100px; height: 100px; }
+  .explore-side .btn { min-width: 50px; min-height: 50px; }
+}

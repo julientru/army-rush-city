@@ -1,0 +1,30 @@
+/* Pause and save (pause.js): the ⏸️ buttons and the box over the battle, shared by the Army Rush games. */
+.btn.pause-btn { pointer-events: auto; min-width: 44px; min-height: 44px; padding: 4px 8px; font-size: 1.2rem; background: var(--card); cursor: pointer; }
+.btn.pause-btn[hidden] { display: none; }
+.city-top .btn.pause-btn { background: var(--card); }
+
+.pause {
+  position: fixed; inset: 0; z-index: 80;
+  display: flex; align-items: center; justify-content: center;
+  padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+  background: rgba(43, 45, 66, 0.6);
+  touch-action: none; user-select: none; -webkit-user-select: none;
+}
+.pause[hidden] { display: none; }
+.pause-card {
+  width: min(100%, 420px); max-height: 100%; overflow-y: auto;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  padding: 20px 16px; border-radius: var(--radius); background: var(--card); color: var(--ink);
+  box-shadow: var(--shadow); text-align: center;
+}
+.pause-title { font-size: clamp(1.6rem, 8vw, 2.4rem); font-weight: bold; }
+.pause-info { font-weight: bold; font-size: clamp(0.95rem, 4.2vw, 1.2rem); }
+.pause-note { font-size: clamp(0.85rem, 3.6vw, 1rem); opacity: 0.8; }
+.pause-btns { display: flex; flex-direction: column; gap: 10px; width: 100%; margin-top: 4px; }
+.pause-btns .btn { width: 100%; min-height: 52px; font-size: clamp(1rem, 4.6vw, 1.3rem); text-decoration: none; text-align: center; }
+.pause-btns .btn[hidden] { display: none; }
+@media (orientation: landscape) and (max-height: 500px) {
+  .pause-card { width: min(100%, 560px); gap: 6px; padding: 12px 16px; }
+  .pause-btns { flex-direction: row; }
+  .pause-btns .btn { min-height: 48px; padding: 8px 6px; }
+}
