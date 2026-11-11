@@ -103,7 +103,9 @@ window.ArmyPause = (function () {
     const q = (s) => box.querySelector(s);
     q("[data-act=play]").textContent = t("▶️ Keep playing");
     q("[data-act=again]").textContent = t("🔄 Start again");
-    q(".home").textContent = t("🏠 Games");
+    // Same "Julien's projects" grid icon as the top bar and the other games.
+    q(".home").innerHTML = document.querySelector(".hud .home svg").outerHTML;
+    q(".home").append(t("Julien's projects"));
     q(".pause-note").textContent = t("💾 Your battle is saved on this device.");
     // Taps on the box must not reach the battle behind it.
     box.addEventListener("pointerdown", (e) => e.stopPropagation());
