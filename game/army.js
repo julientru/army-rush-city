@@ -707,6 +707,17 @@
 
   // ---------- Screens and banner (plain HTML on top of the picture) ----------
 
+  // Under the start, lose and win screens: who is playing, with Log in (or their name, which opens
+  // the log in page to switch player) and the Best scores page. A tap on them doesn't start a battle.
+  function accountRow() {
+    const esc = (s) => String(s).replace(/[&<>"]/g, (c) => "&#" + c.charCodeAt(0) + ";");
+    const me = Accounts.online && Accounts.player;
+    const who = !Accounts.online ? "" : me
+      ? "<a class='btn' href='login.html'>👤 " + esc(me.name) + "</a>"
+      : "<a class='btn go' href='login.html'>" + t("👤 Log in") + "</a>";
+    return "<div class='account-row'>" + who + "<a class='btn' href='scores.html'>" + t("🏆 Best scores") + "</a></div>";
+  }
+
   let screenKey = "";
   function updateScreen() {
     const key = (state === "ready" ? "ready:" + level : state) + ":" + mode;
@@ -725,14 +736,15 @@
         : "<div>" + t("Shoot boxes to get") + "</div><div>" + t("a new weapon 🏹, more of it,") + "</div><div>" + t("or a stronger defence 🧱") + "</div>";
       el.screen.innerHTML = "<div class='big'>" + t(FULL ? "🏰 Army Rush City!" : "🪖 Army Rush!") + "</div><div>" + t("An enemy army is coming!") + "</div>" + aim +
         how + look +
-        "<div class='gold'>" + t("Level: {name}", { name: LEVELS[level].name }) + "</div><div class='go'>" + t("Tap to start!") + "</div>";
+        "<div class='gold'>" + t("Level: {name}", { name: LEVELS[level].name }) + "</div><div class='go'>" + t("Tap to start!") + "</div>" + accountRow();
     } else if (state === "over") {
       el.screen.innerHTML = "<div class='big bad'>" + t("Oh no! 😵") + "</div><div>" + t("They got through!") + "</div>" +
         "<div>" + t("You reached wave {n}", { n: city.on ? city.round : g.wave + 1 }) + "</div><div class='gold'>" + t(FULL ? "Tip: build towers and barracks!" : "Tip: open more boxes!") + "</div>" +
-        "<div class='go'>" + t("Tap to try again") + "</div>";
+        "<div class='go'>" + t("Tap to try again") + "</div>" + accountRow();
     } else if (state === "won") {
       el.screen.innerHTML = "<div class='big'>" + t("YOU WIN! 🏆") + "</div><div>" + t("The King Tank") + "</div><div>" + t("is destroyed!") + "</div>" +
-        "<div class='gold'>⏱️ " + Accounts.formatTime(g.clock) + "</div><div class='go'>" + t("Tap to play again") + "</div>";
+        "<div class='gold'>⏱️ " + Accounts.formatTime(g.clock) + "</div><div class='go'>" + t("Tap to play again") + "</div>" +
+        (Accounts.online && !Accounts.player ? "<div>" + t("Log in to keep your time!") + "</div>" : "") + accountRow();
     }
   }
 

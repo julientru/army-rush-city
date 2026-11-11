@@ -11,7 +11,7 @@ import { dirname, extname, join, posix, relative } from "node:path";
 
 const OUT = "dist";
 // What the site is made of. Anything else in the repo is not published.
-const SOURCES = ["index.html", ".nojekyll", "css", "js", "game"];
+const SOURCES = ["index.html", "login.html", "scores.html", ".nojekyll", "css", "js", "game"];
 // Already minified: hashed but not minified again.
 const MINIFIED = /\.min\.js$/;
 

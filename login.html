@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Log in · Army Rush City</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+  <div class="topbar">
+    <a class="btn back" href="index.html" aria-label="Back to the game">🏰</a>
+    <h1>👤 Who is playing?</h1>
+    <span></span>
+  </div>
+
+  <!-- Signed in: who it is, and where to go next. -->
+  <section class="signin" id="signedIn" hidden>
+    <p class="hello" id="hello"></p>
+    <div class="row">
+      <a class="btn go" href="index.html">▶️ Play</a>
+      <a class="btn" href="scores.html">🏆 Best scores</a>
+    </div>
+    <div class="row"><button class="btn" type="button" id="logOut">👋 Log out</button></div>
+  </section>
+
+  <!-- Signed out: log in, or make a new player. -->
+  <form class="signin" id="form" hidden novalidate>
+    <nav class="tabs modes" aria-label="Log in or new player">
+      <button class="btn" type="button" data-mode="login" aria-pressed="true">▶️ Log in</button>
+      <button class="btn" type="button" data-mode="new" aria-pressed="false">🆕 I'm new</button>
+    </nav>
+    <p class="note" id="intro"></p>
+    <label>Your name <input name="player" autocomplete="username" autocapitalize="off" spellcheck="false" maxlength="16" required></label>
+    <label>Your secret PIN <input name="pin" type="password" inputmode="numeric" autocomplete="current-password" maxlength="6" required></label>
+    <label id="againLabel" hidden>Your secret PIN again <input name="again" type="password" inputmode="numeric" autocomplete="new-password" maxlength="6"></label>
+    <p class="error" role="alert" id="error"></p>
+    <div class="row"><button class="btn go" type="submit" id="go"></button></div>
+  </form>
+
+  <!-- No Supabase project in js/config.js: nothing to sign in to. -->
+  <section class="signin" id="offline" hidden>
+    <p class="note">Scores are only kept on this device for now.</p>
+    <div class="row"><a class="btn go" href="index.html">▶️ Play</a></div>
+  </section>
+
+  <script src="js/i18n.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/accounts.js"></script>
+  <script src="js/login.js"></script>
+  <script src="js/version.js"></script>
+</body>
+</html>
