@@ -4,7 +4,7 @@ Build your own city from the Stone Age to the AI Empire: it makes the army that 
 
 The page is `index.html`. The game's own code is in `game/`. A few files are shared with kids-games and were copied from it: `css/style.css`, `js/i18n.js` (languages), `js/sound.js` (sounds and music), `js/config.js`, `js/accounts.js` and `js/badges.js` (player accounts, best scores and badges, in the same Supabase project as kids-games), `js/version.js` and `js/lib/three.min.js`. `css/pages.css`, `login.html`, `scores.html`, `js/login.js` and `js/scores.js` are this game's own. Wins are still sent as `army` with a `-city` level, so they keep showing in the kids-games Best scores page, and the same browser storage keys are used, so a player signed in on kids-games is signed in here too when both are served from the same site. If you change one of those shared files in kids-games, copy it here too.
 
-The 🏠 button goes to `../index.html`, the landing page of all of Julien's projects on public-pages.
+The "Julien's projects" button (the same four-squares icon as in the other games) goes to `../index.html`, the landing page of all of Julien's projects on public-pages.
 
 
 ## One battle, three views: 2D / 3D / FPS
@@ -43,7 +43,7 @@ There are no sound files: everything is played on the fly with the Web Audio API
 
 ## Pause and save
 
-During a battle, the ⏸️ button next to 🏠 (or P / Escape on a computer) pauses the battle and the city, with **▶️ Keep playing**, **🔄 Start again** and **🏠 Games**. The city view has its own ⏸️ next to ⚔️ Battle. The battle also pauses by itself when the page is hidden (the phone goes to sleep or you switch app).
+During a battle, the ⏸️ button next to the Julien's projects button (or P / Escape on a computer) pauses the battle and the city, with **▶️ Keep playing**, **🔄 Start again** and **Julien's projects**. The city view has its own ⏸️ next to ⚔️ Battle. The battle also pauses by itself when the page is hidden (the phone goes to sleep or you switch app).
 
 While a battle is on, it is saved in the browser every second (`localStorage`, key `army-city-save`, nothing is sent anywhere): the level, the battle and the whole city. When the page opens again with a saved battle, it asks **▶️ Keep playing** or **🔄 Start again**. There is no view in the save: a saved battle comes back in the view you are in. A lost or won battle is not kept. The things flying around (shots, sparks) are not saved, so a battle comes back without them. The code is in `game/pause.js`, `pause.css` and `pause-strings.js`; `city.js` gives its city with `city.save()` and `city.load()`.
 

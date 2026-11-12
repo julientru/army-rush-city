@@ -96,6 +96,9 @@ window.I18n = (function () {
     root.querySelectorAll("[aria-label]").forEach((el) => {
       el.setAttribute("aria-label", t(el.getAttribute("aria-label")));
     });
+    root.querySelectorAll("[title]").forEach((el) => {
+      el.title = t(el.title);
+    });
     document.title = t(document.title);
   }
 
@@ -131,6 +134,7 @@ window.I18n = (function () {
   add({
     fr: {
       "Back to games": "Retour aux jeux",
+      "Julien's projects": "Projets de Julien",
       "Easy": "Facile",
       "Medium": "Moyen",
       "Hard": "Difficile",
@@ -151,6 +155,7 @@ window.I18n = (function () {
     },
     "zh-HK": {
       "Back to games": "返去遊戲",
+      "Julien's projects": "Julien 嘅作品",
       "Easy": "容易",
       "Medium": "中等",
       "Hard": "困難",
