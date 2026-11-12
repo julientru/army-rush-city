@@ -1,0 +1,53 @@
+/* Army Rush City's own pages around the game (login.html, scores.html): the same darker,
+   more serious look as the battle, on top of the shared kids-games style.css. */
+:root {
+  --bg: #2f3437;
+  --ink: #ece8df;
+  --card: #3d4347;
+  --blue: #8a9a5b;
+  --shadow: 0 3px 0 rgba(0, 0, 0, 0.45);
+  --radius: 12px;
+}
+html, body { background: var(--bg); color: var(--ink); }
+body { padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) 24px max(16px, env(safe-area-inset-left)); }
+h1, h2, h3 { font-family: "Arial Black", "Helvetica Neue", Arial, sans-serif; letter-spacing: 0.02em; }
+.topbar h1 { color: #e9c46a; text-align: center; }
+.btn {
+  background: rgba(30, 32, 34, 0.9); color: #ece8df;
+  border: 1px solid rgba(255, 255, 255, 0.16); border-radius: 10px;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.45);
+  text-decoration: none;
+}
+.btn.go, .btn[aria-pressed="true"] { background: #556b2f; color: #fff; border-color: #8a9a5b; }
+.btn.back { min-width: 44px; min-height: 44px; padding: 4px 10px; }
+.account .me { background: var(--card); }
+.score-card li.mine { background: #556b2f; color: #fff; }
+.empty { text-align: center; opacity: 0.85; grid-column: 1 / -1; margin: 6px 0; }
+.tabs { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin: 8px 0 16px; }
+.tabs .btn { min-height: 44px; padding: 6px 14px; font-size: 1.05rem; cursor: pointer; background: rgba(30, 32, 34, 0.9); color: #ece8df; }
+.tabs .btn[aria-pressed="true"] { background: #556b2f; color: #fff; }
+
+/* ---------- Log in page ---------- */
+.signin {
+  width: 100%; max-width: 420px;
+  background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);
+  padding: 18px 18px 20px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.signin[hidden] { display: none; }
+.signin h2 { margin: 0; font-size: 1.4rem; color: #e9c46a; }
+.signin label { display: flex; flex-direction: column; gap: 4px; font-weight: bold; font-size: 1.1rem; }
+.signin label[hidden] { display: none; }
+.signin input {
+  font: inherit; font-size: 1.3rem; padding: 10px 12px;
+  background: #24282a; color: var(--ink);
+  border: 2px solid #5c6468; border-radius: 10px;
+}
+.signin input:focus { border-color: #a7c957; outline: none; }
+.signin .row { display: flex; gap: 10px; flex-wrap: wrap; }
+.signin .row .btn { flex: 1 1 auto; font-size: 1.15rem; min-height: 48px; cursor: pointer; }
+.signin .btn:disabled { opacity: 0.6; }
+.signin .error { color: #ff8a80; font-weight: bold; margin: 0; min-height: 1.2em; }
+.signin .note { margin: 0; font-size: 0.95rem; opacity: 0.8; }
+.signin .hello { font-size: 1.5rem; font-weight: bold; margin: 0; text-align: center; }
+.signin .modes { margin: 0; }

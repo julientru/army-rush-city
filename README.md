@@ -2,7 +2,7 @@
 
 Build your own city from the Stone Age to the AI Empire: it makes the army that stops the silly enemy, in 2D, 3D or FPS. A game for kids that used to live in [kids-games](https://github.com/julientru/kids-games) (`games/armycity/`) and now has its own repo.
 
-The page is `index.html`. The game's own code is in `game/`. A few files are shared with kids-games and were copied from it: `css/style.css`, `js/i18n.js` (languages), `js/sound.js` (sounds and music), `js/config.js`, `js/accounts.js` and `js/badges.js` (player accounts, best scores and badges, in the same Supabase project as kids-games), `js/version.js` and `js/lib/three.min.js`. Wins are still sent as `army` with a `-city` level, so they keep showing in the kids-games Best scores page, and the same browser storage keys are used, so a player signed in on kids-games is signed in here too when both are served from the same site. If you change one of those shared files in kids-games, copy it here too.
+The page is `index.html`. The game's own code is in `game/`. A few files are shared with kids-games and were copied from it: `css/style.css`, `js/i18n.js` (languages), `js/sound.js` (sounds and music), `js/config.js`, `js/accounts.js` and `js/badges.js` (player accounts, best scores and badges, in the same Supabase project as kids-games), `js/version.js` and `js/lib/three.min.js`. `css/pages.css`, `login.html`, `scores.html`, `js/login.js` and `js/scores.js` are this game's own. Wins are still sent as `army` with a `-city` level, so they keep showing in the kids-games Best scores page, and the same browser storage keys are used, so a player signed in on kids-games is signed in here too when both are served from the same site. If you change one of those shared files in kids-games, copy it here too.
 
 The "Julien's projects" button (the same four-squares icon as in the other games) goes to `../index.html`, the landing page of all of Julien's projects on public-pages.
 
@@ -48,6 +48,16 @@ During a battle, the ⏸️ button next to the Julien's projects button (or P / 
 While a battle is on, it is saved in the browser every second (`localStorage`, key `army-city-save`, nothing is sent anywhere): the level, the battle and the whole city. When the page opens again with a saved battle, it asks **▶️ Keep playing** or **🔄 Start again**. There is no view in the save: a saved battle comes back in the view you are in. A lost or won battle is not kept. The things flying around (shots, sparks) are not saved, so a battle comes back without them. The code is in `game/pause.js`, `pause.css` and `pause-strings.js`; `city.js` gives its city with `city.save()` and `city.load()`.
 
 
+## Log in and Best scores
+
+The start, lose and win screens have two buttons under them: **👤 Log in** (or the player's name once signed in) and **🏆 Best scores**.
+
+- `login.html` (code in `js/login.js`) signs in with the same name and PIN as kids-games, in the same Supabase project, so a player made here plays in kids-games too and the other way round. **▶️ Log in** is for a player who already exists, **🆕 I'm new** makes a new player (the PIN is typed twice so a typo doesn't lock a kid out). Once signed in it goes back to the game (or to the Best scores page with `login.html?next=scores.html`); opened while signed in it shows who it is, with **👋 Log out**. `login.html#new` opens on "I'm new".
+- `scores.html` (code in `js/scores.js`) shows only Army Rush City: **📅 This week** (the top 10 of each level since Monday) and **🏆 All time** (my best on each level, the top 10 of each level, and the bests on this device). The score is the time to win, so the fastest is first.
+- Wins made while signed out stay on the device and go to whoever signs in next (as in kids-games). No new table or SQL is needed: everything uses the `players`, `scores` and `best_scores` of kids-games' `supabase/setup.sql`.
+
+Both pages use `css/pages.css` on top of the shared `css/style.css` for the game's darker look. `js/accounts.js` now also gives `Accounts.logIn(name, pin)` and `Accounts.signUp(name, pin)` for a page with its own form; kids-games' copy can take the same two lines.
+
 ## Run locally
 
 Serve the folder and open http://localhost:8000:
@@ -58,7 +68,7 @@ python3 -m http.server 8000
 
 ## Version
 
-The version is kept in one place: `APP_VERSION` in `js/version.js` (now **1.0.1**).
+The version is kept in one place: `APP_VERSION` in `js/version.js` (now **1.1.0**).
 
 ## Build and publish
 

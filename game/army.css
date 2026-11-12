@@ -91,6 +91,9 @@ body { padding: 0; background: #bde0fe; }
 #screen .go { font-size: 1.3em; color: #6bcb77; margin-top: 8px; }
 #screen .bad { color: #ff6b6b; }
 #screen .gold { color: #ffd93d; }
+/* Log in and Best scores, under the start, lose and win screens. */
+#screen .account-row { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 10px; pointer-events: auto; }
+#screen .account-row .btn { min-height: 44px; padding: 6px 14px; font-size: clamp(0.85rem, 3.6vw, 1.05rem); text-decoration: none; text-shadow: none; cursor: pointer; }
 #menu {
   position: absolute; left: 84px; right: 84px; bottom: max(12px, env(safe-area-inset-bottom));
   justify-content: center;

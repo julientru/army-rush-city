@@ -418,7 +418,11 @@ window.Accounts = (function () {
   send();
 
   return {
-    online, games: GAMES, submit, bestScores, boards, localBest, show, formatTime, levelName, makeBar, logOut,
+    online, games: GAMES, submit,
+    // For a page with its own sign-in form (login.html): both give the player, or throw an Error
+    // whose message is ready to show.
+    logIn: (name, pin) => enter("log_in", name, pin),
+    signUp: (name, pin) => enter("sign_up", name, pin), bestScores, boards, localBest, show, formatTime, levelName, makeBar, logOut,
     history, waitingFor, playerScores, scoresBetween, bestOf,
     get player() { return player; },
     onChange: (fn) => listeners.push(fn),
