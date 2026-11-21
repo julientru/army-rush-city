@@ -6,4 +6,8 @@
 window.KIDS_GAMES_SUPABASE = {
   url: "https://evwcfqrhrfvaovboevto.supabase.co",
   key: "sb_publishable_gfw0jfYXsgoG7uCF5edgMg_Wui6a95e",
+  // Bot check for new players (js/botcheck.js): the Cloudflare Turnstile *site key* (0x4AAA…),
+  // also public. The same key works in kids-games, army-rush-city and raiding-pirates.
+  // Left empty, new players sign up with no bot check. See kids-games' supabase/README.md, "Bots".
+  turnstileSiteKey: "",
 };

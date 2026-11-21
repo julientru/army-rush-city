@@ -101,6 +101,8 @@ window.Accounts = (function () {
     name_taken: "Someone already has that name. Try another one!",
     wrong: "That name and PIN don't match. Try again!",
     locked: "Too many wrong PINs. Wait 10 minutes and try again.",
+    captcha: "We couldn't check that you're a real player. Try again!",
+    too_many: "Too many tries. Wait a little and try again.",
   };
 
   async function enter(fn, name, pin) {
@@ -109,9 +111,19 @@ window.Accounts = (function () {
     pin = String(pin || "").trim();
     if (!/^[A-Za-z0-9]{2,16}$/.test(name)) throw new Error(t(ERRORS.bad_name));
     if (!/^[0-9]{4,6}$/.test(pin)) throw new Error(t(ERRORS.bad_pin));
+    const args = { p_username: name, p_pin: pin };
+    // A new player first passes the bot check (js/botcheck.js), when js/config.js has a Turnstile site key.
+    const siteKey = String(cfg.turnstileSiteKey || "");
+    if (fn === "sign_up" && siteKey) {
+      try {
+        args.p_captcha = await window.BotCheck.token(siteKey);
+      } catch (e) {
+        throw new Error(t(ERRORS.captcha));
+      }
+    }
     let out;
     try {
-      out = await rpc(fn, { p_username: name, p_pin: pin });
+      out = await rpc(fn, args);
     } catch (e) {
       throw new Error(t("Can't reach the internet. Try again later."));
     }
@@ -368,6 +380,8 @@ window.Accounts = (function () {
       "Someone already has that name. Try another one!": "Quelqu'un a déjà ce nom. Essaie un autre !",
       "That name and PIN don't match. Try again!": "Ce nom et ce code ne vont pas ensemble. Réessaie !",
       "Too many wrong PINs. Wait 10 minutes and try again.": "Trop de mauvais codes. Attends 10 minutes et réessaie.",
+      "We couldn't check that you're a real player. Try again!": "On n'a pas pu vérifier que tu es un vrai joueur. Réessaie !",
+      "Too many tries. Wait a little and try again.": "Trop d'essais. Attends un peu et réessaie.",
       "Something went wrong. Try again!": "Oups, ça n'a pas marché. Réessaie !",
       "Can't reach the internet. Try again later.": "Pas d'internet. Réessaie plus tard.",
       "Scores are only kept on this device for now.": "Pour l'instant, les scores restent sur cet appareil.",
@@ -393,6 +407,8 @@ window.Accounts = (function () {
       "Someone already has that name. Try another one!": "已經有人用咗呢個名，試吓第二個啦！",
       "That name and PIN don't match. Try again!": "個名同密碼對唔上，再試吓！",
       "Too many wrong PINs. Wait 10 minutes and try again.": "錯咗太多次密碼，等 10 分鐘再試啦。",
+      "We couldn't check that you're a real player. Try again!": "檢查唔到你係真人玩家，再試吓！",
+      "Too many tries. Wait a little and try again.": "試得太多次，等陣再試啦。",
       "Something went wrong. Try again!": "出咗啲問題，再試吓！",
       "Can't reach the internet. Try again later.": "上唔到網，遲啲再試啦。",
       "Scores are only kept on this device for now.": "暫時分數只會留喺呢部機。",
